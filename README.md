@@ -12,8 +12,4 @@ This module was created for my own use.
 Installation
 ------------
 
-Clone this repository, and execute setup.py.
-
-    $ git clone https://github.com/choo/fsutils
-    $ cd fsutils
-    $ sudo python setup.py install
+    $ pip install git+https://github.com/choo/fsutils
