@@ -5,6 +5,11 @@ import fsutils
 CUR_DIR  = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(CUR_DIR, 'data/json')
 
+TEST_LINES_DATA = [
+    'foo',
+    'foo\tbar',
+    'foo\tbar  foo bar'
+]
 TEST_CSV_DATA = [
     {'a': 1, 'b': 'b',                               'k': 'foofoo'},
     {'a': 3, 'b': 'b',  'c': 'c',                    'k': 'foobar'},
@@ -43,6 +48,14 @@ class TestFsUtils(TestCase):
         recursively = True
         filepaths = fsutils.list_files(DATA_DIR, 'json', recursively)
         self.assertEqual(len(filepaths), 4)
+
+
+    def test_read_and_write_lines(self):
+        testfilepath = os.path.join(CUR_DIR, 'test.txt')
+        fsutils.write_lines(TEST_LINES_DATA, testfilepath)
+        content = fsutils.read_lines(testfilepath)
+        self.assertEqual(TEST_LINES_DATA, content)
+        os.remove(testfilepath)
 
 
     def test_read_and_write_csv(self):
