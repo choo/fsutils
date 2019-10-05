@@ -50,6 +50,7 @@ class TestFsUtils(TestCase):
         fsutils.write_csv(TEST_CSV_DATA, testfilepath)
         content = fsutils.read_csv(testfilepath)
         self.assertEqual(TEST_CSV_EXPECTED, content)
+        os.remove(testfilepath)
 
 
     def test_read_json(self):
