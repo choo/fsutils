@@ -10,6 +10,12 @@ TEST_LINES_DATA = [
     'foo\tbar',
     'foo\tbar  foo bar'
 ]
+TEST_COMMENT_LINES_DATA = [
+    'foo',
+    'foo\tbar',
+    '##commented out',
+    'foo\tbar  foo bar'
+]
 TEST_CSV_DATA = [
     {'a': 1, 'b': 'b',                               'k': 'foofoo'},
     {'a': 3, 'b': 'b',  'c': 'c',                    'k': 'foobar'},
@@ -54,6 +60,16 @@ class TestFsUtils(TestCase):
         testfilepath = os.path.join(CUR_DIR, 'test.txt')
         fsutils.write_lines(TEST_LINES_DATA, testfilepath)
         content = fsutils.read_lines(testfilepath)
+        self.assertEqual(TEST_LINES_DATA, content)
+        os.remove(testfilepath)
+
+
+    def test_read_lines_with_comment(self):
+        testfilepath = os.path.join(CUR_DIR, 'test_comment.txt')
+        comment_prefix = '##'
+
+        fsutils.write_lines(TEST_COMMENT_LINES_DATA, testfilepath)
+        content = fsutils.read_lines(testfilepath, comment_prefix)
         self.assertEqual(TEST_LINES_DATA, content)
         os.remove(testfilepath)
 

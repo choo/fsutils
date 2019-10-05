@@ -37,9 +37,11 @@ def write_file(filepath):
     return ret
 
 
-def read_lines(filepath):
+def read_lines(filepath, comment_prefix=None):
     with open(filepath, 'r') as f:
         ret = [line.strip('\n\r') for line in f.readlines()]
+    if comment_prefix:
+        ret = list(filter(lambda x: not x.startswith(comment_prefix), ret))
     return ret
 
 def write_lines(lines, filepath):
@@ -84,9 +86,9 @@ def write_csv(records, filepath, col_names = None,
     return
 
 
-def read_csv(filepath, delimiter='\t', has_header = True):
+def read_csv(filepath, delimiter='\t', has_header = True, comment_prefix = None):
 
-    lines = read_lines(filepath)
+    lines = read_lines(filepath, comment_prefix = comment_prefix)
     col_names = None
     if has_header:
         header = lines[0]
