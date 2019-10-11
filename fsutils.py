@@ -135,7 +135,7 @@ def write_json(content, filepath, indent=2):
 
 def read_yaml(filepath):
     with open(filepath, 'r', encoding='utf8') as f:
-        ret = yaml.load(f)
+        ret = yaml.load(f, Loader=yaml.FullLoader)
     return ret
 
 def write_yaml(content, filepath, indent=2):
