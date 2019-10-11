@@ -31,9 +31,9 @@ def read_file(filepath):
         ret = f.read()
     return ret
 
-def write_file(filepath):
+def write_file(content, filepath):
     with open(filepath, 'w') as f:
-        ret = f.write()
+        ret = f.write(content)
     return ret
 
 
