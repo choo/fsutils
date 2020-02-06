@@ -32,6 +32,9 @@ def read_file(filepath):
     return ret
 
 def write_file(content, filepath):
+    dirpath = os.path.dirname(filepath)
+    if dirpath != '' and not os.path.exists(dirpath):
+        os.makedirs(dirpath)
     with open(filepath, 'w') as f:
         ret = f.write(content)
     return ret
