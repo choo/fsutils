@@ -48,6 +48,9 @@ def read_lines(filepath, comment_prefix=None):
     return ret
 
 def write_lines(lines, filepath):
+    dirpath = os.path.dirname(filepath)
+    if dirpath != '' and not os.path.exists(dirpath):
+        os.makedirs(dirpath)
     with open(filepath, 'w') as f:
         f.write("\n".join(lines))
     return True
