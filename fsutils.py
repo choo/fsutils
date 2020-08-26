@@ -135,7 +135,7 @@ def write_json(content, filepath, indent=2):
     if dirpath != '' and not os.path.exists(dirpath):
         os.makedirs(dirpath)
     with open(filepath, 'w', encoding='utf8') as f:
-        json.dump(content, f, ensure_ascii=False, indent=indent)
+        json.dump(content, f, indent=indent)
     return True
 
 
@@ -149,5 +149,5 @@ def write_yaml(content, filepath, indent=2):
     if dirpath != '' and not os.path.exists(dirpath):
         os.makedirs(dirpath)
     with open(filepath, 'w', encoding='utf8') as f:
-        yaml.dump(content, f, ensure_ascii=False, indent=indent)
+        yaml.dump(content, f, indent=indent)
     return True
