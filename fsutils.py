@@ -22,6 +22,9 @@ def list_files(dirpath, extension = None, recursively = False):
 
 
 def create_file(filepath):
+    dirpath = os.path.dirname(filepath)
+    if dirpath != '' and not os.path.exists(dirpath):
+        os.makedirs(dirpath)
     f = open(filepath, 'w')
     f.close()
     return True
