@@ -75,10 +75,11 @@ def write_csv(records, filepath, col_names = None,
 
     if not col_names:
         col_names = []
-        for r in records:
-            for k in r:
-                if not k in col_names:
-                    col_names.append(k)
+    # pickup all columns
+    for r in records:
+        for k in r:
+            if not k in col_names:
+                col_names.append(k)
 
     create_file(filepath)
     if has_header:
