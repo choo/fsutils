@@ -67,12 +67,6 @@ def append_lines(lines, filepath):
 def write_csv(records, filepath, col_names = None,
         delimiter='\t', has_header = True):
 
-    def _escape(s, delimiter):
-        s = s.replace(delimiter, ' ')
-        s = s.replace('\n', ' ')
-        s = s.replace('\r', ' ')
-        return s
-
     if not col_names:
         col_names = []
     # pickup all columns
@@ -89,11 +83,36 @@ def write_csv(records, filepath, col_names = None,
         row = []
         for col in col_names:
             if col in r and r[col] is not None:
-                row.append(_escape(str(r[col]), delimiter))
+                row.append(_escape_string(str(r[col]), delimiter))
             else:
                 row.append('')
         append_lines([delimiter.join(row)], filepath)
     return
+
+def append_csv(records, filepath, delimiter='\t'):
+    with open(filepath, 'r') as f:
+        header_line = f.readline().strip('\n\r')
+    col_names = header_line.split('\t')
+    col_set = set(col_names)
+
+    for r in records:
+        row = []
+        for col in col_names:
+            if col in r and r[col] is not None:
+                row.append(_escape_string(str(r[col]), delimiter))
+            else:
+                row.append('')
+        for key in r:
+            if not key in col_set:
+                raise Exception('Invalid column {} found'.format(key))
+        append_lines([delimiter.join(row)], filepath)
+    return
+
+def _escape_string(s, delimiter):
+    s = s.replace(delimiter, ' ')
+    s = s.replace('\n', ' ')
+    s = s.replace('\r', ' ')
+    return s
 
 
 def read_csv(filepath, delimiter='\t', has_header = True, comment_prefix = None):
