@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #!-*- coding: utf-8 -*-
 
-import os, re, json, yaml
+import os, re, json, yaml, msgpack
 
 def list_files(dirpath, extension = None, recursively = False):
     ret = []
@@ -174,3 +174,19 @@ def write_yaml(content, filepath, indent=2):
     with open(filepath, 'w', encoding='utf8') as f:
         yaml.dump(content, f, indent=indent)
     return True
+
+def read_msgpack(filepath):
+    with open(filepath, 'rb') as f:
+        ret = msgpack.unpackb(f.read())
+    return ret
+
+
+def write_msgpack(content, filepath):
+    dirpath = os.path.dirname(filepath)
+    if dirpath != '' and not os.path.exists(dirpath):
+        os.makedirs(dirpath)
+    with open(filepath, 'wb') as f:
+        f.write(msgpack.packb(content))
+    return True
+
+

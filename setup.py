@@ -1,18 +1,21 @@
 import setuptools
 
+def _requires_from_file(filename):
+    return open(filename).read().splitlines()
+
 with open("README.md") as f:
     long_description = f.read()
 
 setuptools.setup(
     name='fsutils',
-    version='1.1.0',
+    version='1.1.1',
     description='utility functions related to filesystems such as creating file or reading file',
     long_description=long_description,
     author='Sugimori Choo',
     author_email='sugimori.choo@gmail.com',
     url='https://github.com/choo/fsutils',
     py_modules=["fsutils"],
-    install_requires=[],
+    install_requires=_requires_from_file('requirements.txt'),
     license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
