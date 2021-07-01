@@ -143,6 +143,34 @@ def read_csv(filepath, delimiter='\t', has_header = True, comment_prefix = None)
     return ret
 
 
+def read_csv_with_generator(filepath, delimiter='\t', has_header = True,
+        comment_prefix = None):
+    '''
+        this version uses python generator, so does not need huge memory
+        USAGE: the same as fsutils.read_csv
+            tsv_records = fsutils.read_csv_with_generator(filepath)
+            for records in tsv_records:
+                # process something
+        The only difference between read_csv() is that empty values also
+        have key in this function (empty values do not have key in read_csv()).
+    '''
+    with open(filepath, "r") as f:
+        col_names = None
+        if has_header:
+            header = f.readline().strip('\n')
+            col_names = header.split(delimiter)
+        while True:
+            line = f.readline().strip('\n')
+            if not line:
+                break
+            vals = line.split(delimiter)
+            if has_header:
+                ret = {col: vals[idx] for idx, col in enumerate(col_names)}
+                yield ret
+            else:
+                yield vals
+
+
 def read_json(filepath):
     with open(filepath, 'r', encoding='utf8') as f:
         ret = json.load(f)
