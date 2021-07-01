@@ -82,6 +82,19 @@ class TestFsUtils(TestCase):
         os.remove(testfilepath)
 
 
+    def test_read_csv_with_generator(self):
+        testfilepath = os.path.join(CUR_DIR, 'test.tsv')
+        fsutils.write_csv(TEST_CSV_DATA, testfilepath)
+        content = fsutils.read_csv_with_generator(testfilepath)
+        for idx, record in enumerate(content):
+            for col_name in TEST_CSV_EXPECTED[idx]:
+                if TEST_CSV_EXPECTED[idx][col_name] is None:
+                    self.assertEqual('', record[col_name])
+                else:
+                    self.assertEqual(
+                            TEST_CSV_EXPECTED[idx][col_name], record[col_name])
+        os.remove(testfilepath)
+
     def test_read_json(self):
         filepath = os.path.join(DATA_DIR, 'a.json')
         content  = fsutils.read_json(filepath)
