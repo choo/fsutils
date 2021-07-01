@@ -8,7 +8,7 @@ with open("README.md") as f:
 
 setuptools.setup(
     name='fsutils',
-    version='1.1.1',
+    version='1.1.2',
     description='utility functions related to filesystems such as creating file or reading file',
     long_description=long_description,
     author='Sugimori Choo',
