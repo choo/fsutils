@@ -116,14 +116,12 @@ def _escape_string(s, delimiter):
 
 
 def read_csv(filepath, delimiter='\t', has_header = True, comment_prefix = None):
-
     lines = read_lines(filepath, comment_prefix = comment_prefix)
     col_names = None
     if has_header:
         header = lines[0]
         col_names = header.split(delimiter)
         lines = lines[1:]
-
     ret = []
     for line in lines:
         cols = line.split(delimiter)
@@ -133,7 +131,6 @@ def read_csv(filepath, delimiter='\t', has_header = True, comment_prefix = None)
                       'but the following line has %d columns. \n' % len(cols) + \
                       '%s' % line
             raise Exception(message)
-
         tmp = None
         if has_header:
             tmp = {}
@@ -142,9 +139,7 @@ def read_csv(filepath, delimiter='\t', has_header = True, comment_prefix = None)
                     tmp[col_names[i]] = cols[i]
         else:
             tmp = cols
-
         ret.append(tmp)
-
     return ret
 
 
