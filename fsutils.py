@@ -20,6 +20,19 @@ def list_files(dirpath, extension = None, recursively = False):
     ret.sort()
     return ret
 
+def list_files_with_generator(dirpath, extension=None):
+    '''
+        this version uses python generator, so does not need huge memory
+    '''
+    pattern = re.compile('\.' + extension + '$') if extension else None
+    for (cur_dir, dirnames, filenames) in os.walk(dirpath):
+        for filename in filenames:
+            filepath = os.path.join(cur_dir, filename)
+            if pattern and not re.search(pattern, filename):
+                continue
+            else:
+                yield filepath
+
 
 def create_file(filepath):
     dirpath = os.path.dirname(filepath)
